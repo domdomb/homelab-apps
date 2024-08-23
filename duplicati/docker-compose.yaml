@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  duplicati:
+    image: duplicati/duplicati
+    container_name: duplicati
+    privileged: true
+    environment:
+      - PUID=1000   # Change this to your user ID
+      - PGID=1000   # Change this to your group ID
+      - TZ=America/Los_Angeles  # Set your timezone
+    volumes:
+      - ./data/config:/config   # Persistent storage for Duplicati configuration
+        #- ../:/data       # The data you want to back up
+      - ../restore-test:/data
+      - ./data/Duplicati:/data/Duplicati
+    ports:
+      - 8200:8200  # Web UI access
+    restart: unless-stopped
