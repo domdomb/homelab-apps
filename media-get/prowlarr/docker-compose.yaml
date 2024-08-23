@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+  prowlarr:
+    image: linuxserver/prowlarr:latest
+    container_name: prowlarr
+    networks:
+      - caddynet
+    environment:
+      - PUID=1000  # Change to your user ID
+      - PGID=1000  # Change to your group ID
+      - TZ=PST  # Change to your timezone
+    volumes:
+      - ./data/config:/config
+    restart: unless-stopped
+networks:
+  caddynet:
+    external: true

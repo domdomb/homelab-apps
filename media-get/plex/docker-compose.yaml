@@ -1,0 +1,21 @@
+version: "3.3"
+services:
+  plex-server:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex-server
+    networks:
+      - caddynet
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=America/Toronto
+      - VERSION=docker
+      - PLEX_CLAIM=claim-Z9KMPfBDSiT_PJUxJLRG
+    volumes:
+      - "./data/config/:/config:Z"
+      - "../common/media/tv:/tv:Z"
+      - "../common/media/movies:/movies:Z"
+    restart: unless-stopped
+networks:
+  caddynet:
+    external: true

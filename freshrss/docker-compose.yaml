@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  freshrss:
+    image: freshrss/freshrss:latest
+    container_name: freshrss
+    volumes:
+      - ./data/freshrss_data:/var/www/FreshRSS/data  # Persistent storage for FreshRSS
+    networks:
+      - caddynet
+    environment:
+      - CRON_MIN=*/20  # Update feeds every 20 minutes
+      - TZ=PST  # Set the correct timezone
+    restart: unless-stopped
+networks:
+  caddynet:
+    external: true

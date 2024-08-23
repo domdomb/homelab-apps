@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  homepage:
+    image: ghcr.io/benphelps/homepage:latest
+    container_name: homepage
+      #    ports:
+      #      - "3000:3000"
+    networks:
+      - caddynet
+    volumes:
+      - ./data/config:/app/config
+      - ./data/assets:/app/assets
+    restart: unless-stopped
+networks:
+  caddynet:
+    external: true

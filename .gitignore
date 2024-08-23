@@ -1,0 +1,4 @@
+data/*
+inactive
+*/.env
+**/env

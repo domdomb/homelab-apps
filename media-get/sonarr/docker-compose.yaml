@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  sonarr:
+    image: linuxserver/sonarr:latest
+    container_name: sonarr
+    networks:
+      - caddynet
+    environment:
+      - PUID=1000  # Adjust this to your user ID
+      - PGID=1000  # Adjust this to your group ID
+      - TZ=Europe/London  # Adjust this to your timezone
+    volumes:
+      - ./data/config:/config  # Adjust this to your configuration path
+      - ../common/media/tv:/tv  # Adjust this to your TV series path
+      - ../common/media/downloads:/downloads  # Adjust this to your downloads path
+    restart: unless-stopped
+networks:
+  caddynet:
+    external: true

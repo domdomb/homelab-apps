@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  sabnzbd:
+    image: linuxserver/sabnzbd:latest
+    container_name: sabnzbd
+    networks:
+      - caddynet
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=PST
+      - SABNZBD_HOST=0.0.0.0
+    volumes:
+      - ./data/config:/config
+      - ./data/incomplete:/incomplete-downloads
+      - ../common/media/downloads/:/downloads
+      - ../common/media/movies:/movies
+      - ../common/media/tv:/tv
+      - ../common/media/music:/music
+    restart: unless-stopped
+networks:
+  caddynet:
+    external: true

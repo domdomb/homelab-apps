@@ -1,0 +1,19 @@
+version: '3'
+services:
+  jellyseerr:
+    container_name: jellyseerr
+    image: fallenbagel/jellyseerr:latest
+    networks:
+      - caddynet
+    ports:
+      - 5055:5055
+    volumes:
+      - ./data/config:/app/config
+    environment:
+      - TZ=PST
+      - PGID=1000
+      - PUID=1000
+    restart: unless-stopped
+networks:
+  caddynet:
+    external: true

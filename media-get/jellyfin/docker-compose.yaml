@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    privileged: true  # Necessary for hardware acceleration
+    networks:
+      - caddynet 
+    volumes:
+      - ./data/config:/config # Configuration directory
+      - /data/cache:/cache # Cache directory
+      - ../common/media/movies:/movies
+      - ../common/media/tv:/tv
+      - ../common/media/music:/music
+
+    devices:
+      - /dev/dri:/dev/dri #intel  integrated gpu access
+
+    restart: unless-stopped
+    environment:
+      - PUID=1000 # User ID for Jellyfin process
+      - PGID=1000 # Group ID for Jellyfin process
+      - TZ=PST # Timezone, e.g., "America/New_York"
+networks:
+  caddynet:
+    external: true

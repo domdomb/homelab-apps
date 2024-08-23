@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  frigate:
+    container_name: frigate
+    image: ghcr.io/blakeblackshear/frigate:stable
+    privileged: true  # Necessary for hardware acceleration
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./data/config:/config
+      - ./data/storage:/media/frigate
+
+    devices:
+      - /dev/dri:/dev/dri #intel  integrated gpu access
+    shm_size: '128mb'
+
+
+      #    expose:
+      #      - "1883"
+
+    environment:
+      FRIGATE_GARAGE_PASSWORD: ${GARAGE}
+      FRIGATE_LIVING_ROOM_PASSWORD: ${LIVING_ROOM_PASSWORD}
+      FRIGATE_FRONT_WINDOW_PASSWORD: ${FRONT_WINDOW}
+    networks:
+      - caddynet
+networks:
+  caddynet:
+    external: true

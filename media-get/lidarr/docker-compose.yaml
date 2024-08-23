@@ -1,0 +1,25 @@
+version: '3.8'
+# This repo outlines a custom process for lidarr
+# https://github.com/RandomNinjaAtk/arr-scripts/blob/main/lidarr/readme.md
+
+services:
+  lidarr:
+    image: linuxserver/lidarr:latest
+    container_name: lidarr
+    networks:
+      - caddynet
+    environment:
+      - PUID=1000    # Change to your user id
+      - PGID=1000    # Change to your group id
+      - TZ=PST   # Change to your timezone, e.g., America/New_York
+    volumes:
+      - ./data/config:/config   # Change to your config directory
+      - ./data/custom/csd:/custom-service.d #custom service folder
+      - ./data/custom/ccid:/custom-cont-init.d #custom service folder
+      - ../common/media/music:/music     # Change to your music directory
+      - ../common/media/downloads:/downloads  # Change to your downloads directory
+
+    restart: unless-stopped
+networks:
+  caddynet:
+    external: true

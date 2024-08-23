@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  dashdot:
+    image: mauricenino/dashdot:latest
+    container_name: dashdot
+    privileged: true
+    networks:
+      - caddynet
+    restart: unless-stopped
+    ports:
+      - 8080:3001
+    environment:
+      - HOSTNAME="dotdash.dlavezzoli.local"
+      - ALLOW_ROOT=true
+      - TZ="PST"  # Set your timezone, e.g., "America/New_York"
+      - DASHDOT_ENABLE_CPU_TEMPS=true
+        #      - DASHDOT_WIDGET_LIST= 'os,cpu,storage,ram,network,gpu'
+    volumes:
+      - /:/mnt/host:ro
+networks:
+  caddynet:
+    external: true

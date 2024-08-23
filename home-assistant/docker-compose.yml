@@ -1,0 +1,15 @@
+version: '3'
+services:
+  homeassistant:
+    container_name: homeassistant
+    image: homeassistant/home-assistant:latest
+    networks:
+      - caddynet
+    volumes:
+      - ./data/homeassistant/config:/config
+      - ./data/homeassistant/media:/media
+      - /etc/localtime:/etc/localtime:ro
+    restart: unless-stopped
+networks:
+  caddynet:
+    external: true

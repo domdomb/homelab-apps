@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    networks:
+      - caddynet
+    environment:
+      - PUID=1000  # Replace with your user ID
+      - PGID=1000  # Replace with your group ID
+      - TZ=PST  # Replace with your timezone, e.g., "America/New_York"
+    volumes:
+      - ./data/config:/config
+      - ../common/media/movies:/movies
+      - ../common/media/downloads:/downloads
+    restart: unless-stopped
+networks:
+  caddynet:
+    external: true

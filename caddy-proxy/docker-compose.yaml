@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  caddy:
+    image: caddy:latest
+    container_name: caddy
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - caddynet
+    volumes:
+      - ./data/Caddyfile:/etc/caddy/Caddyfile
+      - ./data/data:/data
+      - ./data/config:/config
+      - ./data/certs/caddy_root.crt:/etc/caddy/root.crt
+      - ./data/certs/dlavezzoli.com/:/etc/caddy/dlavezzoli.com
+    restart: unless-stopped
+      #    entrypoint: ["sh", "-c", "trap 'exit 0' SIGTERM; while :; do sleep 10; done"]
+networks:
+  caddynet:
+    external: true
